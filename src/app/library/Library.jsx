@@ -1,14 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { FaSearch as SearchIcon } from 'react-icons/fa'
 import Spinner from '../components/Loading.jsx'
 
-export function generateStaticParams(data){
-    return data.map(game => (
-        {slug: game.title}
-    ))
-}
+
 
 export default function Library(){
     
@@ -34,24 +31,25 @@ export default function Library(){
         game.genre.toLowerCase().includes(searchVal.toLowerCase())
     )) : data
 
-    
-
     const gameCard = filteredGames.map(game => (
 
         <div 
             key={game.id} 
             className='bg-amber-700 w-91 h-63 rounded inline-block ml-5 mb-5 hover:scale-105 ease-in-out duration-150 cursor-pointer'
         >
-            <img 
-                src={game.thumbnail} 
-                className='rounded-b-none rounded'
-                alt={game.title}
-            />
-            <h1>{game.title}</h1>
-            <p>{game.genre}</p>
+            <Link href={`/library/${game.id}`}>
+                <img 
+                    src={game.thumbnail} 
+                    className='rounded-b-none rounded'
+                    alt={`${game.title} image`}
+                />
+                <h1>{game.title}</h1>
+                <p>{game.genre}</p>
+            </Link>
         </div>
-
     ))
+
+            
 
         
     if (loading) {
@@ -69,7 +67,7 @@ export default function Library(){
                     placeholder='Search by name or genre...'
                     aria-label='search input'
                     onChange={e => setSearchVal(e.target.value)}
-                    className='border-amber-700 border-2 rounded p-1 focus:scale-155'
+                    className='border-amber-700 border-2 rounded p-1'
                 />
             </div>
             <div className='inline-block ml-35'>

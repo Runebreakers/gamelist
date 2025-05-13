@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 export default function Footer(){
 
@@ -9,7 +9,7 @@ export default function Footer(){
     
 
     return (
-        <footer className='items-center justify-center flex p-4  bg-amber-700 mt-auto sticky bottom-0'>
+        <footer className='items-center justify-center flex p-4 bg-gradient-to-br from-amber-600 to-amber-800 mt-auto sticky bottom-0'>
             {year} Development project
         </footer>
     )

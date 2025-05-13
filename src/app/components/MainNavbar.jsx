@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react'
 import { GiAbstract063 as Icon } from "react-icons/gi";
 
 
