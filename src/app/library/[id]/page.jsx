@@ -1,7 +1,6 @@
-import Link from "next/link"
-import Button from "@/app/components/Button"
 import GameDescription from './GameDescription'
 import PlayButton from '../../components/PlayButton'
+import MoreDescription from './MoreDescription'
 
 
 async function getGame(id){
@@ -26,12 +25,18 @@ export default async function LibraryGameDetail( { params } ){
             title, 
             description,
             publisher,
-            game_url
+            game_url,
+            minimum_system_requirements,
+            genre,
+            developer,
+            release_date,
+            screenshots,
+            platform
             } = game
         console.log(game)
 
         return (
-            <main className='flex  mt-15 max-w-210 ml-auto mr-auto'>
+            <main className='flex  mt-15 max-w-210 ml-auto mr-auto font-revalia'>
                 <div className='mr-10 flex-col'> 
                     <img src={thumbnail} className='rounded justify-start' />
                     <div className='flex justify-center items-center pb-8'>
@@ -47,6 +52,14 @@ export default async function LibraryGameDetail( { params } ){
                     <h3 className='text-xl'>Description:</h3>
                     <GameDescription 
                         description={description}
+                    />
+                    <MoreDescription 
+                        req={minimum_system_requirements}
+                        genre={genre}
+                        developer={developer}
+                        imgs={screenshots}
+                        relDate={release_date}
+                        webBrowser={platform === 'Web Browser' ? true : false}
                     />
                 </div>
             </main>

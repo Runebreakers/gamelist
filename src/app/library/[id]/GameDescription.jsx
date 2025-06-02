@@ -14,7 +14,7 @@ export default function GameDescription( { description } ){
         <div>
             <div 
                 className={`overflow-hidden transition-all duration-700 ease-in-out 
-                ${ expanded ? 'max-h-350' : 'max-h-20' }`}
+                ${ expanded ? 'max-h-350' : 'max-h-40' }`}
             >
                 <p>{expanded ? description : description.slice(0, 120) + '...'}</p>
             </div>
