@@ -4,7 +4,7 @@ export default function About(){
     
     
     return (
-        <div className='flex-column justify-center border-2 rounded-md border-amber-700 mr-100 ml-100 mt-10 pb-130 pt-2 h-2/3 mb-41'>
+        <div className='flex-column justify-center font-revalia border-2 rounded-md border-amber-700 mr-auto ml-auto mt-auto mb-auto pb-130 pt-2 h-2/3 p-5'>
             <h1 className='flex text-4xl justify-center'>About Gamelist</h1>
             <div className='flex mt-5 text-2xl justify-center'>
                 <ul>

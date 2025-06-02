@@ -3,23 +3,20 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { GiAbstract063 as Icon } from "react-icons/gi";
-
+import SessionChecker from './SessionCheck'
 
 
 export default function MainNavbar(){
     
     const hoverStyle = 'hover:scale-110 hover:text-amber-700 ease-in-out duration-150'
-
     const pathname = usePathname()
-
     const activeStyle = 'text-amber-700'
-
     const isActive = href => {
         return pathname === href
     }
     
     return (
-        <nav className='h-70px flex p-2 justify-around pt-10'>
+        <nav className='h-70px flex p-2 justify-around pt-10 font-revalia'>
             <Link 
                 href={'/'}
                 className={`${hoverStyle} ${isActive('/') ? activeStyle : ''}`}
@@ -28,6 +25,8 @@ export default function MainNavbar(){
                     className='h-10 w-10'
                 />
             </Link>
+
+            <SessionChecker />
 
             <div className=' flex items-center px-2  text-2xl'>
                 <Link 

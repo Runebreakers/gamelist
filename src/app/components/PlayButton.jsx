@@ -9,7 +9,11 @@ export default function PlayButton( { gameUrl, desc } ) {
     }
 
     return (
-        <Button onClick={() => handleRedirect(gameUrl)}>{desc}</Button>
+        <Button
+            onClick={() => handleRedirect(gameUrl)}
+        >
+        {desc}
+        </Button>
     )
 
 }
