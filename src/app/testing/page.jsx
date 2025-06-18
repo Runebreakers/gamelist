@@ -1,7 +1,5 @@
-import Testing from "./testing";
+import Testing from './testing'
 
-export default function Page(){
-
+export default function Page() {
     return <Testing />
-
 }

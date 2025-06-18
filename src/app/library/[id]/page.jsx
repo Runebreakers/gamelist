@@ -2,27 +2,23 @@ import GameDescription from './GameDescription'
 import PlayButton from '../../components/PlayButton'
 import MoreDescription from './MoreDescription'
 
-
-async function getGame(id){
-
+async function getGame(id) {
     const res = await fetch(`https://www.freetogame.com/api/game?id=${id}`)
 
-    if (!res.ok){
-        throw new Error (`Failed to fetch game: ${res.status} ${res.statusText}`)
+    if (!res.ok) {
+        throw new Error(`Failed to fetch game: ${res.status} ${res.statusText}`)
     }
 
     return res.json()
-
 }
 
-export default async function LibraryGameDetail( { params } ){
-
+export default async function LibraryGameDetail({ params }) {
     try {
         const { id } = await params
         const game = await getGame(id)
         const {
-            thumbnail, 
-            title, 
+            thumbnail,
+            title,
             description,
             publisher,
             game_url,
@@ -31,29 +27,24 @@ export default async function LibraryGameDetail( { params } ){
             developer,
             release_date,
             screenshots,
-            platform
-            } = game
+            platform,
+        } = game
         console.log(game)
 
         return (
-            <main className='flex  mt-15 max-w-210 ml-auto mr-auto font-revalia'>
-                <div className='mr-10 flex-col'> 
-                    <img src={thumbnail} className='rounded justify-start' />
-                    <div className='flex justify-center items-center pb-8'>
-                        <PlayButton 
-                            gameUrl = {game_url}
-                            desc = {'PLAY NOW'}
-                        />
+            <main className="font-revalia mt-15 mr-auto ml-auto flex max-w-210">
+                <div className="mr-10 flex-col">
+                    <img src={thumbnail} className="justify-start rounded" />
+                    <div className="flex items-center justify-center pb-8">
+                        <PlayButton gameUrl={game_url} desc={'PLAY NOW'} />
                     </div>
                 </div>
-                <div className='w-110 p-2'>
-                    <h1 className='text-2xl mb-2'>{title}</h1>
-                    <h2 className='text-xl mb-2'>{publisher}</h2>
-                    <h3 className='text-xl'>Description:</h3>
-                    <GameDescription 
-                        description={description}
-                    />
-                    <MoreDescription 
+                <div className="w-110 p-2">
+                    <h1 className="mb-2 text-2xl">{title}</h1>
+                    <h2 className="mb-2 text-xl">{publisher}</h2>
+                    <h3 className="text-xl">Description:</h3>
+                    <GameDescription description={description} />
+                    <MoreDescription
                         req={minimum_system_requirements}
                         genre={genre}
                         developer={developer}
@@ -68,8 +59,4 @@ export default async function LibraryGameDetail( { params } ){
         console.error(err)
         return <h1>There was a problem fetching the game.</h1>
     }
-    
-
-    
-    
 }

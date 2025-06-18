@@ -1,27 +1,28 @@
 'use client'
 
-import { 
+import {
     IoHeartOutline as EmptyFav,
-    IoHeartSharp as FullFav
-    } from "react-icons/io5"
+    IoHeartSharp as FullFav,
+} from 'react-icons/io5'
 
 import { useState, useEffect } from 'react'
 
-export default function FavoriteButton({ gameId }){
-
+export default function FavoriteButton({ gameId }) {
     const [isFavorite, setIsFavorite] = useState(false)
-    
+
     useEffect(() => {
-        const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || []
+        const storedFavorites =
+            JSON.parse(localStorage.getItem('favorites')) || []
         setIsFavorite(storedFavorites.includes(gameId))
     }, [gameId])
-    
+
     const toggleFavorite = () => {
-        const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || []
+        const storedFavorites =
+            JSON.parse(localStorage.getItem('favorites')) || []
         let updatedFavorites
 
         if (storedFavorites.includes(gameId)) {
-            updatedFavorites = storedFavorites.filter(id => id !== gameId)
+            updatedFavorites = storedFavorites.filter((id) => id !== gameId)
         } else {
             updatedFavorites = [...storedFavorites, gameId]
         }
@@ -30,21 +31,22 @@ export default function FavoriteButton({ gameId }){
         setIsFavorite(!isFavorite)
     }
 
-    const tooltipText = isFavorite ? 'Remove from favorites' : 'Mark as favorite'
+    const tooltipText = isFavorite
+        ? 'Remove from favorites'
+        : 'Mark as favorite'
 
     return (
-        <div className='relative group'>
-            <div className='absolute top-full left-1/2 mt-0.2 -translate-x-1/2 whitespace-nowrap bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition pointer-events-none'>
+        <div className="group relative">
+            <div className="mt-0.2 pointer-events-none absolute top-full left-1/2 -translate-x-1/2 rounded bg-black px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition group-hover:opacity-100">
                 {tooltipText}
             </div>
             <button
                 onClick={toggleFavorite}
                 aria-label={tooltipText}
-                className='hover:cursor-pointer'
+                className="hover:cursor-pointer"
             >
                 {isFavorite ? <FullFav /> : <EmptyFav />}
             </button>
         </div>
     )
-
 }

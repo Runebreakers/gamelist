@@ -3,14 +3,13 @@
 import { useState } from 'react'
 import { supabase } from '../utils/supabaseClient'
 
-export default function ToggleCompleted({ todo }){
-
+export default function ToggleCompleted({ todo }) {
     const [isCompleted, setIsCompleted] = useState(todo.completed)
 
     const handleToggle = async () => {
         const { error } = await supabase
             .from('todos')
-            .update({completed: !isCompleted})
+            .update({ completed: !isCompleted })
             .eq('id', todo.id)
 
         if (error) {
@@ -21,11 +20,6 @@ export default function ToggleCompleted({ todo }){
     }
 
     return (
-        <input
-            type='checkbox'
-            checked={isCompleted}
-            onChange={handleToggle}
-        />
-)
-
+        <input type="checkbox" checked={isCompleted} onChange={handleToggle} />
+    )
 }

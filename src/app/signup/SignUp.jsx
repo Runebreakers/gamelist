@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Filter } from 'bad-words'
 import Button from '../components/Button'
 
-export default function SignUpForm(){
-
+export default function SignUpForm() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
@@ -20,7 +19,7 @@ export default function SignUpForm(){
         e.preventDefault()
         setMessage('')
 
-        const {data: existing} = await supabase
+        const { data: existing } = await supabase
             .from('profiles')
             .select('id')
             .eq('username', username)
@@ -36,17 +35,18 @@ export default function SignUpForm(){
             return
         }
 
-        const {data: authData, error: signUpError} = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    display_name: username
-                }
-            }
-        })
+        const { data: authData, error: signUpError } =
+            await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        display_name: username,
+                    },
+                },
+            })
 
-        if (signUpError){
+        if (signUpError) {
             setMessage(`Signup failed: ${signUpError.message}`)
             return
         }
@@ -55,9 +55,9 @@ export default function SignUpForm(){
 
         const { error: profileError } = await supabase
             .from('profiles')
-            .insert([{ id: userId, username}])
+            .insert([{ id: userId, username }])
 
-        if (profileError){
+        if (profileError) {
             setMessage('Failed to save profile: ' + profileError.message)
         } else {
             setMessage('Successfully signed up!')
@@ -66,19 +66,21 @@ export default function SignUpForm(){
     }
 
     return (
-        <div className='flex justify-center items-center font-revalia mt-auto mb-auto max-h-140'>
+        <div className="font-revalia mt-auto mb-auto flex max-h-140 items-center justify-center">
             <form
                 onSubmit={handleSignup}
-                className='flex flex-col justify-center text-center max-w-140 space-y-0 border-2 border-l-0 border-r-0 rounded border-amber-600 p-8 bg-gray-900'
+                className="flex max-w-140 flex-col justify-center space-y-0 rounded border-2 border-r-0 border-l-0 border-amber-600 bg-gray-900 p-8 text-center"
             >
-                <h1><strong>Create new account</strong></h1>
+                <h1>
+                    <strong>Create new account</strong>
+                </h1>
                 <hr />
                 <h2>Enter your username</h2>
                 <input
-                    className='text-center'
-                    name='username'
-                    type='text'
-                    placeholder='Arthas'
+                    className="text-center"
+                    name="username"
+                    type="text"
+                    placeholder="Arthas"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
@@ -86,34 +88,29 @@ export default function SignUpForm(){
                 <br />
                 <h3>Enter valid email</h3>
                 <input
-                    className='text-center'
-                    type='email'
-                    name='email'
-                    placeholder='example@gamelist.com'
+                    className="text-center"
+                    type="email"
+                    name="email"
+                    placeholder="example@gamelist.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
                 <br />
                 <h4>Enter your password</h4>
-                <input 
-                    className='text-center'
-                    type='password'
-                    name='password'
-                    placeholder='password'
+                <input
+                    className="text-center"
+                    type="password"
+                    name="password"
+                    placeholder="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
                 <br />
-                <Button
-                    type='submit'
-                >
-                    Sign up
-                </Button>
-                {message && <p className='text-red-600'>{message}</p>}
+                <Button type="submit">Sign up</Button>
+                {message && <p className="text-red-600">{message}</p>}
             </form>
         </div>
     )
-
 }
