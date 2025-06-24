@@ -1,5 +1,6 @@
 'use client'
 
+import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 import { supabase } from '../utils/supabaseClient'
 
@@ -11,8 +12,9 @@ export default function SessionChecker() {
             const { data, error } = await supabase.auth.getSession()
             if (data?.session?.user) {
                 setUser(data.session.user)
+                toast.success('Logged in')
             } else {
-                console.error(error.message)
+                toast.error(error)
             }
         }
 

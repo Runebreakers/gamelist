@@ -1,5 +1,6 @@
 'use client'
 
+import toast from 'react-hot-toast'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaSearch as SearchIcon } from 'react-icons/fa'
@@ -33,22 +34,28 @@ export default function Library() {
                 setLoading(false)
             })
             .catch((err) => {
-                console.error('Fetching error: ', err)
+                toast.error('Fetching error: ', err)
                 setLoading(false)
             })
     }, [])
+    
+    let debounceTimer
 
     const handleOnMouseEnter = async (game) => {
-        setHoveredGameId(game.id)
-        if (!videoIds[game.id]) {
-            const id = await getGameTrailer(game.title)
-            if (id) {
-                setVideoIds((prev) => ({ ...prev, [game.id]: id }))
+        clearTimeout(debounceTimer)
+        debounceTimer = setTimeout(async () => {
+            setHoveredGameId(game.id)
+            if (!videoIds[game.id]) {
+                const id = await getGameTrailer(game.title)
+                if (id) {
+                    setVideoIds(prev => ({...prev, [game.id]: id}))
+                }
             }
-        }
+        }, 1500)
     }
 
     const handleOnMouseLeave = () => {
+        clearTimeout(debounceTimer)
         setHoveredGameId(null)
     }
 
