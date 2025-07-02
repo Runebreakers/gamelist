@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { GiAbstract063 as Icon } from 'react-icons/gi'
+import { FaUserCircle as  ProfileIcon } from 'react-icons/fa'
 import SessionChecker from './SessionCheck'
 
 export default function MainNavbar() {
@@ -49,9 +50,16 @@ export default function MainNavbar() {
 
                 <Link
                     href={'/login'}
-                    className={`${hoverStyle} ${isActive('/login') ? activeStyle : ''}`}
+                    className={`pr-3 ${hoverStyle} ${isActive('/login') ? activeStyle : ''}`}
                 >
                     Login
+                </Link>
+
+                <Link
+                    href={'/profile'}
+                    className={`${hoverStyle} ${isActive('/profile') ? activeStyle : ''}`}
+                >
+                    <ProfileIcon className='h-10 w-10' />
                 </Link>
             </div>
         </nav>
