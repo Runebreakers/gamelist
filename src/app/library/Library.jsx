@@ -38,7 +38,7 @@ export default function Library() {
                 setLoading(false)
             })
     }, [])
-    
+
     let debounceTimer
 
     const handleOnMouseEnter = async (game) => {
@@ -48,7 +48,7 @@ export default function Library() {
             if (!videoIds[game.id]) {
                 const id = await getGameTrailer(game.title)
                 if (id) {
-                    setVideoIds(prev => ({...prev, [game.id]: id}))
+                    setVideoIds((prev) => ({ ...prev, [game.id]: id }))
                 }
             }
         }, 1500)
