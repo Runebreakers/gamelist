@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../utils/supabaseClient'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/router'
-import Loading from './Loading'
+import { useRouter } from 'next/navigation'
+import Spinner from '../components/Loading'
 import Image from 'next/image'
 
 
 export default function Profile() {
     const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [profile, setProfile] = useState({
         username: '',
         bio: '',
@@ -29,8 +29,10 @@ export default function Profile() {
                 await fetchProfile(session.user.id)
             } else {
                 setUser(null)
-                toast.error('You have to log in first')
-                router.push('/login')
+                toast.error('You have to log in first', { duration: 4000 })
+                setTimeout(() => {
+                    router.push('/login')
+                }, 1000)
             } 
             setLoading(false)
         }
@@ -49,7 +51,7 @@ export default function Profile() {
         return () => {
             data?.subscription.unsubscribe()
         }
-    }, [router])
+    }, [])
 
     const fetchProfile = async (userId) => {
         try {
@@ -116,7 +118,7 @@ export default function Profile() {
     }
 
     if (loading) {
-        return <Loading />
+        return <Spinner />
     }
 
     if(!user) {
@@ -134,7 +136,7 @@ export default function Profile() {
                             onClick={signOut}
                             className="text-red-600 hover:text-red-800"
                         >
-
+                            Sign out
                         </button>
                     </div>
                     {/* Profile Info */}
@@ -159,6 +161,73 @@ export default function Profile() {
                             <div>
                                 <p>{user.email}</p>
                             </div>
+                            {/* Profile Form */}
+                            <div>
+                                <div>
+                                    <label>
+                                        Username
+                                    </label>
+                                    <input 
+                                        type='text'
+                                        value={profile.username}
+                                        onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+                                        disabled={!editing}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label>
+                                        Bio
+                                    </label>
+                                    <textarea
+                                        value={profile.bio}
+                                        onChange={(e) => setProfile({...profile, bio: e.target.value})}
+                                        disabled={!editing}
+                                        rows={4}
+                                        placeholder='Tell something about yourself'
+                                    />
+                                </div>
+
+                                <div>
+                                    <label>
+                                        Avatar URL
+                                    </label>
+                                    <input 
+                                        type='url'
+                                        value={profile.avatar_url}
+                                        onChange={(e) => setProfile({...profile, avatar_url: e.target.value})}
+                                        disabled={!editing}
+                                        placeholder='Enter your avatar URL'
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                {
+                                editing ? (
+                                    <>
+                                        <button
+                                            onClick={updateProfile}
+                                            disabled={loading}
+                                        >
+                                            {loading ? 'Saving...' : 'Save changes'}
+                                        </button>
+                                        <button
+                                            onClick={() => setEditing(false)}
+                                            disabled={loading}                                          
+                                        >
+                                            Cancel
+                                        </button>
+                                    </>
+                                ) : (
+                                    <button
+                                        onClick={() => setEditing(true)}
+                                    >
+                                        Edit Profile
+                                    </button>
+                                )
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -166,3 +235,5 @@ export default function Profile() {
         </div>
     )
 }
+
+

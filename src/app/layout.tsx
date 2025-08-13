@@ -3,6 +3,7 @@ import { Revalia } from 'next/font/google'
 import './globals.css'
 import MainNavbar from './components/MainNavbar'
 import Footer from './components/Footer'
+import { Toaster } from 'react-hot-toast'
 
 const revalia = Revalia({
     variable: '--font-revalia',
@@ -25,6 +26,9 @@ export default function RootLayout({
             <body
                 className={`${revalia.variable} flex min-h-screen flex-col antialiased`}
             >
+                <div>
+                    <Toaster />
+                </div>
                 <MainNavbar />
                 {children}
                 <div className="sticky bottom-0 mt-auto">
